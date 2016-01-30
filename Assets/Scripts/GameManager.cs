@@ -54,6 +54,9 @@ public sealed class GameManager : MonoBehaviour
         m_PlayerSpawnToggled = false;
         m_BigTimeText.text = ""; //Clear time text
 
+        //Unlock cam
+        m_CamController.bLockPosition = false;
+
         if ( OnMatchStart != null )
             OnMatchStart( );
     }
@@ -104,7 +107,6 @@ public sealed class GameManager : MonoBehaviour
         m_CamController = m_GameCamera.GetComponent<CameraController>( );
         m_CamController.bLockPosition   = true;
         m_CamController.enabled         = true;
-
 
         m_CurrentGameTime = 4.0f;
 
