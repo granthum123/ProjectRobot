@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[Serializable]
 public class RobotManager {
 
 	public Color m_PlayerColor;				
@@ -15,12 +14,9 @@ public class RobotManager {
 	public void Setup()
 	{
 		// Get reference to components
-		m_LeftWeapon = GetComponent<RobotShooting> ();
 	}
 
 	public void DisableControl()
 	{
-		m_LeftWeapon.enabled = false;
-		m_RightWeapon.enabled = false;
 	}
 }

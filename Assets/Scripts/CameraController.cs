@@ -13,7 +13,6 @@ public class CameraController : MonoBehaviour
         if ( m_Target == null ) m_Target = GameObject.FindGameObjectWithTag( "Player" ).transform;
     }
 
-
     Vector3 m_CameraToLocation;
 
     void FixedUpdate( )

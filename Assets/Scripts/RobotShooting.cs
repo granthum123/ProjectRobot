@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RobotShooting : MonoBehaviour, WeaponInterface {
+public class RobotShooting : MonoBehaviour, IWeapon {
 
 	public int PlayerNumber = 1;
 	public Rigidbody m_Shell;
