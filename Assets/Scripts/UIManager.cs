@@ -42,6 +42,6 @@ public class UIManager : MonoBehaviour {
 	void Update () {
         m_scoreText.text = "Score: " + m_gameManager.m_PlayerScore;
         m_timeText.text = "Time: " + m_gameManager.m_CurrentGameTime;
-        m_healthSlider.value = m_robotManager.m_Health;
+        //m_healthSlider.value = m_robotManager.m_Health;
     }
 }
