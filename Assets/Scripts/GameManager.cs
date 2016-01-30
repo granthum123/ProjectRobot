@@ -106,7 +106,7 @@ public sealed class GameManager : MonoBehaviour
         m_CamController.enabled         = true;
 
 
-        m_CurrentGameTime = 3;
+        m_CurrentGameTime = 4.0f;
 
         StartCoroutine( FadeInScreen( ) );
     }
@@ -153,11 +153,7 @@ public sealed class GameManager : MonoBehaviour
 
                 if ( m_CurrentGameTime <= 1 )
                 {
-                    m_StartMatchTimer -= Time.fixedDeltaTime;
-                    if ( m_StartMatchTimer <= 0 )
-                    {
-                        StartMatch( );
-                    }
+
                 }
             }
 
@@ -169,13 +165,19 @@ public sealed class GameManager : MonoBehaviour
 
             if ( m_PlayerSpawn != null && m_PlayerSpawn.m_HasSpawned )
             {
-                if ( m_CurrentGameTime >= 1 )
+                if ( m_CurrentGameTime >= 1.0f )
                 {
                     m_BigTimeText.text = Mathf.RoundToInt( m_CurrentGameTime ).ToString( );
                 }
                 else
                 {
                     m_BigTimeText.text = "BATTLE!";
+
+                    m_StartMatchTimer -= Time.fixedDeltaTime;
+                    if ( m_StartMatchTimer <= 0 )
+                    {
+                        StartMatch( );
+                    }
                 }
             }
             else
