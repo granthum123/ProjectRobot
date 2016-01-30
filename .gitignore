@@ -1,10 +1,10 @@
-# /[Ll]ibrary/
+/[Ll]ibrary/
 /[Ll]ibrary/metadata
-/Library/ScriptAssemblies
-/Library/ShaderCache
-/Library/UnityAssemblies
+#/Library/ScriptAssemblies
+#/Library/ShaderCache
+#/Library/UnityAssemblies
 /[Tt]emp/
-/Temp/
+#/Temp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
