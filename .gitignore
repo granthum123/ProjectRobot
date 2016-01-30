@@ -1,5 +1,8 @@
 # /[Ll]ibrary/
 /[Ll]ibrary/metadata
+/Library/ScriptAssemblies
+/Library/ShaderCache
+/Library/UnityAssemblies
 /[Tt]emp/
 /Temp/
 /[Oo]bj/
