@@ -16,6 +16,8 @@ public class MovementController : MonoBehaviour
     /// Components
     /// </summary>
     private Rigidbody m_RigidBodyComponent;
+    private ParticleSystem m_SmokeParticleSys;
+    private ParticleSystem.EmissionModule m_SmokeParticleEmit;
 
     /// <summary>
     /// Accessors
@@ -40,16 +42,19 @@ public class MovementController : MonoBehaviour
 	{
         //Set rigid body
         m_RigidBodyComponent = GetComponent<Rigidbody>( );
+        m_SmokeParticleSys = transform.FindChild( "RobotSmokeLeft" ).GetComponent<ParticleSystem>( );
+        m_SmokeParticleEmit = m_SmokeParticleSys.emission;
 	}
 
     private float m_Speed = 0.0f;
-    private Vector3 m_Dir = Vector3.zero;
+    private Vector3 m_Dir = Vector3.zero, m_TargetDir = Vector3.zero;
+    private float DirDiff = 0.0f;
     void FixedUpdate( )
     {
         m_MoveDirection = Vector3.zero;
 
         m_MoveDirection = Vector3.ClampMagnitude( new Vector3( Input.GetAxis( "Horizontal" ), 0, Input.GetAxis( "Vertical" ) ), 1 );
-
+        m_TargetDir = m_MoveDirection;
         if ( m_MoveDirection != Vector3.zero )
         {
             m_Speed = Mathf.Clamp( m_Speed + ( Time.fixedDeltaTime * m_Acceleration ), 0, 1 );
@@ -61,8 +66,27 @@ public class MovementController : MonoBehaviour
 
         //Add final velocity
         m_RigidBodyComponent.velocity += m_MoveDirection * m_MovementSpeed * m_Speed;
-        print( m_RigidBodyComponent.velocity.magnitude );
-        m_RigidBodyComponent.velocity = Vector3.ClampMagnitude( m_RigidBodyComponent.velocity, 3 );
+        m_RigidBodyComponent.velocity = Vector3.ClampMagnitude( m_RigidBodyComponent.velocity, 5 );
+
+        //Rotate towards direction
+        var calcDir = new Vector3( m_MoveDirection.z, 0, -m_MoveDirection.x );
+        float step = m_Speed * Time.deltaTime * 3.0f;
+        m_Dir = Vector3.RotateTowards( transform.forward, calcDir, step, 0.0f );
+
+        DirDiff = Vector3.Dot( transform.TransformDirection( Vector3.forward ), ( transform.position + m_TargetDir ) - transform.position );
+        print( DirDiff );
+
+        transform.rotation = Quaternion.LookRotation( m_Dir );
+
+        //Are we moving?
+        if ( m_RigidBodyComponent.velocity != Vector3.zero && !m_SmokeParticleSys.isPlaying)
+        {
+            m_SmokeParticleSys.Play( );
+        }
+        else if ( m_RigidBodyComponent.velocity == Vector3.zero && m_SmokeParticleSys.isPlaying )
+        {
+            m_SmokeParticleSys.Stop( );
+        }
     }
 
     public float m_JetpackFuelVal = 10.0f;
