@@ -35,6 +35,9 @@ public sealed class GameManager : MonoBehaviour
                                             OnMatchEnd,
                                             OnMatchReset;
 
+    public delegate void PlayerStartDelegate( GameObject newPlayer );
+    public static event PlayerStartDelegate OnPlayerSpawned;
+
     public float ScreenAlpha = 0.5f;
 
     public int NumberOfBots = 0;
@@ -47,6 +50,10 @@ public sealed class GameManager : MonoBehaviour
     #region Match Control
     public void StartMatch( )
     {
+        m_MatchStarted = true;
+        m_PlayerSpawnToggled = false;
+        m_BigTimeText.text = ""; //Clear time text
+
         if ( OnMatchStart != null )
             OnMatchStart( );
     }
@@ -98,6 +105,9 @@ public sealed class GameManager : MonoBehaviour
         m_CamController.bLockPosition   = true;
         m_CamController.enabled         = true;
 
+
+        m_CurrentGameTime = 3;
+
         StartCoroutine( FadeInScreen( ) );
     }
 
@@ -114,14 +124,26 @@ public sealed class GameManager : MonoBehaviour
 
     CameraController m_CamController;
     Text m_BigTimeText;
+    bool m_PlayerSpawnToggled = false;
+    float m_StartMatchTimer = 1;
     void FixedUpdate( )
     {
         //Wait for camera animation to finish
         if ( !m_RoundStarted && !m_MatchStarted )
         {
-            if ( !m_CamAnimationComponent.isPlaying && ScreenAlpha <= 0 )
+            if ( !m_CamAnimationComponent.isPlaying && ScreenAlpha <= 0 && !m_PlayerSpawnToggled )
             {
-                if(m_CamController == null) m_CamController = m_GameCamera.GetComponent<CameraController>();
+                if ( m_CamController == null ) m_CamController = m_GameCamera.GetComponent<CameraController>( );
+
+                //Spawn player 
+                m_PlayerSpawn.Spawn( );
+                m_PlayerSpawnToggled = true;
+            }
+
+            //Start countdown and zoom to player
+            if ( m_PlayerSpawnToggled && m_PlayerSpawn.m_HasSpawned && !m_MatchStarted )
+            {
+                m_CurrentGameTime -= Time.fixedDeltaTime;
 
                 //Lerp camera to player location + offsets
                 m_GameCamera.transform.position = Vector3.Lerp( m_GameCamera.transform.position, m_CamController.m_CameraToLocation, 0.02f );
@@ -129,22 +151,45 @@ public sealed class GameManager : MonoBehaviour
                 //Lerp Rotation to target rotation
                 m_GameCamera.transform.rotation = Quaternion.Lerp( m_GameCamera.transform.rotation, Quaternion.Euler( m_CamController.m_TargetRotation ), 0.02f );
 
-                m_CurrentGameTime = 3;
+                if ( m_CurrentGameTime <= 1 )
+                {
+                    m_StartMatchTimer -= Time.fixedDeltaTime;
+                    if ( m_StartMatchTimer <= 0 )
+                    {
+                        StartMatch( );
+                    }
+                }
             }
-        }
 
-        if ( m_PlayerSpawn.m_HasSpawned && !m_MatchStarted && !m_RoundStarted )
-        {
-            m_CurrentGameTime -= Time.fixedDeltaTime;
-        }
+            if ( m_BigTimeText == null )
+            {
+                m_BigTimeText = ( ( GameObject )GameObject.Instantiate( m_BigTimeTextPrefab, Vector3.zero, Quaternion.identity ) ).GetComponent<Text>( );
+                m_BigTimeText.transform.SetParent( GameObject.FindGameObjectWithTag( "Canvas" ).transform, false );
+            }
 
-        if ( m_BigTimeText == null )
-        {
-            m_BigTimeText = ( ( GameObject )GameObject.Instantiate( m_BigTimeTextPrefab, Vector3.zero, Quaternion.identity ) ).GetComponent<Text>( );
-            m_BigTimeText.transform.SetParent( GameObject.FindGameObjectWithTag( "Canvas" ).transform, false );
+            if ( m_PlayerSpawn != null && m_PlayerSpawn.m_HasSpawned )
+            {
+                if ( m_CurrentGameTime >= 1 )
+                {
+                    m_BigTimeText.text = Mathf.RoundToInt( m_CurrentGameTime ).ToString( );
+                }
+                else
+                {
+                    m_BigTimeText.text = "BATTLE!";
+                }
+            }
+            else
+                m_BigTimeText.text = "";
         }
+    }
 
-        m_BigTimeText.text = m_CurrentGameTime.ToString( );
+    /// <summary>
+    /// TERRIBLE IDEA HERE
+    /// </summary>
+    public static void HasSpawnedPlayer( GameObject _player )
+    {
+        if ( OnPlayerSpawned != null )
+            OnPlayerSpawned( _player );
     }
 
     IEnumerator FadeInScreen( )
