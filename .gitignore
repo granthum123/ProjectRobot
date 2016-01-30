@@ -1,14 +1,5 @@
 /[Ll]ibrary/
-<<<<<<< HEAD
 /[Tt]emp/
-=======
-/[Ll]ibrary/metadata
-#/Library/ScriptAssemblies
-#/Library/ShaderCache
-#/Library/UnityAssemblies
-/[Tt]emp/
-#/Temp/
->>>>>>> 295abf2068433c780eaadb9086b3bb97d1b806e1
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
@@ -27,8 +18,13 @@ ExportedObj/
 *.booproj
 *.svd
 
+
 # Unity3D generated meta files
 *.pidb.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Builds
+*.apk
+*.unitypackage
