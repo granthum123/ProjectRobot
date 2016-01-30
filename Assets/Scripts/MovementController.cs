@@ -42,18 +42,44 @@ public class MovementController : MonoBehaviour
         m_RigidBodyComponent = GetComponent<Rigidbody>( );
 	}
 
+    private float m_Speed = 0.0f;
+    private Vector3 m_Dir = Vector3.zero;
     void FixedUpdate( )
     {
-        print( IsGrounded );
+        m_MoveDirection = Vector3.zero;
 
-        m_MoveDirection += new Vector3( Input.GetAxis( "Horizontal" ), 0, Input.GetAxis( "Vertical" ) );
+        m_MoveDirection = Vector3.ClampMagnitude( new Vector3( Input.GetAxis( "Horizontal" ), 0, Input.GetAxis( "Vertical" ) ), 1 );
+
+        if ( m_MoveDirection != Vector3.zero )
+        {
+            m_Speed = Mathf.Clamp( m_Speed + ( Time.fixedDeltaTime * m_Acceleration ), 0, 1 );
+        }
+        else
+        {
+            m_Speed = Mathf.Clamp( m_Speed - ( Time.fixedDeltaTime * m_Deceleration ), 0, 1 );
+        }
 
         //Add final velocity
-        m_RigidBodyComponent.velocity += m_MoveDirection * Time.fixedDeltaTime;
+        m_RigidBodyComponent.velocity += m_MoveDirection * m_MovementSpeed * m_Speed;
+        print( m_RigidBodyComponent.velocity.magnitude );
+        m_RigidBodyComponent.velocity = Vector3.ClampMagnitude( m_RigidBodyComponent.velocity, 3 );
     }
 
-    void Jump( )
+    public float m_JetpackFuelVal = 10.0f;
+    [HideInInspector] public float m_Fuel = 0.0f;
+    private float m_JetpackTimer = 0.0f;
+    void UseJetpack( )
     {
+        //Are we using it for the first time?
+        //If so, reset fuel amount
+        if ( IsGrounded && m_JetpackTimer == 0.0f )
+        {
+            m_Fuel = m_JetpackFuelVal;
+        }
+
+        m_Fuel -= 30 * Time.fixedDeltaTime;
         m_MoveDirection.y += m_JumpHeight;
+
+        print( "New Fuel Amount: " + m_Fuel );
     }
 }
