@@ -29,12 +29,12 @@ public class Robot : MonoBehaviour
 		m_HealthBar.transform.SetParent (transform, false);
 		Slider bar = m_HealthBar.GetComponent<Slider> ();
 		bar.maxValue = m_MaxHealth;
-		bar.Set (m_MaxHealth);
+		bar.value = m_MaxHealth;
 	}
 		
 	void Update()
 	{
-		m_HealthBar.GetComponent<Slider> ().Set (currentHealth);
+		m_HealthBar.GetComponent<Slider> ().value = currentHealth;
 	}
 
 	void TakeDamage(float damage, Vector3 hitPos)
