@@ -69,18 +69,13 @@ public class MovementController : MonoBehaviour
         m_RigidBodyComponent.velocity = Vector3.ClampMagnitude( m_RigidBodyComponent.velocity, 5 );
 
         //Rotate towards direction
-        var _MouseScreenPos = new Vector2( Input.mousePosition.x, -( Screen.height - Input.mousePosition.y ) );
+        var _MouseScreenPos = new Vector2( Input.mousePosition.x, Input.mousePosition.y );
         var _mouseWorldPos = Camera.main.ScreenToWorldPoint( new Vector3( _MouseScreenPos.x, _MouseScreenPos.y, 9 ) );
 
-        Debug.DrawLine( Camera.main.transform.position, _mouseWorldPos, Color.green );
+        float angle = ( Mathf.Atan2( _mouseWorldPos.y, _mouseWorldPos.x ) * Mathf.Rad2Deg ) - 90f;
+        transform.rotation = Quaternion.AngleAxis( angle, Vector3.up );
 
-        //var calcDir = new Vector3( m_MoveDirection.z, 0, -m_MoveDirection.x );
-        float step = m_Speed * Time.deltaTime * 3.0f;
-        m_Dir = Vector3.RotateTowards( transform.forward, _mouseWorldPos, step, 0.0f );
-
-        //DirDiff = Vector3.Dot( transform.TransformDirection( Vector3.forward ), ( transform.position + m_TargetDir ) - transform.position );
-
-        transform.rotation = Quaternion.LookRotation( m_Dir );
+        Debug.DrawLine( transform.position, _mouseWorldPos, Color.green );
 
         //Are we moving?
         if ( m_RigidBodyComponent.velocity != Vector3.zero && !m_SmokeParticleSys.isPlaying)

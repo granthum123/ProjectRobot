@@ -45,7 +45,7 @@ Shader "Toon/Basic Outline" {
 			Name "OUTLINE"
 			Tags { "LightMode" = "Always" }
 			Cull Front
-			ZWrite On
+			ZWrite Off
 			ColorMask RGB
 			Blend SrcAlpha OneMinusSrcAlpha
 
@@ -53,9 +53,11 @@ Shader "Toon/Basic Outline" {
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile_fog
+
 			fixed4 frag(v2f i) : SV_Target
 			{
 				UNITY_APPLY_FOG(i.fogCoord, i.color);
+
 				return i.color;
 			}
 			ENDCG
