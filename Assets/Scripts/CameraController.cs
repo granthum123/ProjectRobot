@@ -3,9 +3,9 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
+    public bool bLockPosition = false;
     public Transform m_Target;
-
-    public Vector3  m_CameraPositionOffset;
+    public Vector3  m_CameraPositionOffset, m_TargetRotation;
 
     void Awake( )
     {
@@ -13,8 +13,7 @@ public class CameraController : MonoBehaviour
         if ( m_Target == null ) m_Target = GameObject.FindGameObjectWithTag( "Player" ).transform;
     }
 
-    Vector3 m_CameraToLocation;
-
+    public Vector3 m_CameraToLocation { get; private set; }
     void FixedUpdate( )
     {
         if ( m_Target != null )
@@ -23,7 +22,11 @@ public class CameraController : MonoBehaviour
             m_CameraToLocation = m_Target.transform.position + m_CameraPositionOffset;
 
             //Update camera location and rotation
-            transform.position = Vector3.Lerp( transform.position, m_CameraToLocation, 0.2f );
+            if ( !bLockPosition )
+            {
+                transform.rotation = Quaternion.Euler( m_TargetRotation );
+                transform.position = Vector3.Lerp( transform.position, m_CameraToLocation, 0.2f );
+            }
         }
     }
 }

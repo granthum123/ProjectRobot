@@ -18,7 +18,9 @@ public sealed class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject m_RobotPrefab, m_GameCamera, m_FadeScreenObj;
+    public GameObject m_Player, m_GameCamera, m_FadeScreenObj, m_RobotPrefab, m_BigTimeTextPrefab;
+
+    private Animation m_CamAnimationComponent;
 
     public bool m_Paused;							// Game state
 
@@ -32,6 +34,13 @@ public sealed class GameManager : MonoBehaviour
     public static event MatchEventDelegate  OnMatchStart,
                                             OnMatchEnd,
                                             OnMatchReset;
+
+    public float ScreenAlpha = 0.5f;
+
+    public int NumberOfBots = 0;
+
+    private SpawnPoint[] m_SpawnPoints;
+    private SpawnPoint m_PlayerSpawn;
 
     #endregion
 
@@ -55,16 +64,87 @@ public sealed class GameManager : MonoBehaviour
     #endregion
 
     #region GameControl
+
+    void Awake( )
+    {
+        m_RobotPrefab = GameObject.FindGameObjectWithTag( "Player" );
+    }
+
     void Start( )
     {
         m_GameCamera = Camera.main.gameObject;
+        m_CamAnimationComponent = m_GameCamera.GetComponent<Animation>( );
         m_FadeScreenObj = (GameObject)GameObject.Instantiate( m_FadeScreenObj, Vector3.zero, Quaternion.identity );
         m_FadeScreenObj.transform.SetParent( GameObject.FindGameObjectWithTag( "Canvas" ).transform, false );
 
+        //Set countdown timer
+        m_CurrentGameTime = 3;
+
+        //Assign player spawn point
+        m_PlayerSpawn = GetRandomSpawnPoint( );
+        m_PlayerSpawn.m_Owner = SpawnPoint.SpawnOwnerType.PLAYER;
+
+        //Assign bots to spawn point
+        for ( int i = 0; i < NumberOfBots + 1; i++ )
+        {
+            if ( m_SpawnPoints[ i ].m_Owner == SpawnPoint.SpawnOwnerType.NONE ) 
+                m_SpawnPoints[ i ].m_Owner = SpawnPoint.SpawnOwnerType.BOT;
+        }
+
         //Do Start-up animation
-        m_GameCamera.GetComponent<Animation>( ).Play( "Camera_Intro" );
+        m_CamAnimationComponent.Play( "Camera_Intro" );
+
+        m_CamController = m_GameCamera.GetComponent<CameraController>( );
+        m_CamController.bLockPosition   = true;
+        m_CamController.enabled         = true;
 
         StartCoroutine( FadeInScreen( ) );
+    }
+
+    SpawnPoint GetRandomSpawnPoint( )
+    {
+        //Find spawns
+        if(m_SpawnPoints == null) m_SpawnPoints = Component.FindObjectsOfType<SpawnPoint>( );
+
+        var spawnToTest = m_SpawnPoints[ Random.Range( 0, m_SpawnPoints.Length - 1 ) ];
+
+        if ( spawnToTest.m_Owner != SpawnPoint.SpawnOwnerType.NONE ) return GetRandomSpawnPoint( );
+        else return spawnToTest;
+    }
+
+    CameraController m_CamController;
+    Text m_BigTimeText;
+    void FixedUpdate( )
+    {
+        //Wait for camera animation to finish
+        if ( !m_RoundStarted && !m_MatchStarted )
+        {
+            if ( !m_CamAnimationComponent.isPlaying && ScreenAlpha <= 0 )
+            {
+                if(m_CamController == null) m_CamController = m_GameCamera.GetComponent<CameraController>();
+
+                //Lerp camera to player location + offsets
+                m_GameCamera.transform.position = Vector3.Lerp( m_GameCamera.transform.position, m_CamController.m_CameraToLocation, 0.02f );
+
+                //Lerp Rotation to target rotation
+                m_GameCamera.transform.rotation = Quaternion.Lerp( m_GameCamera.transform.rotation, Quaternion.Euler( m_CamController.m_TargetRotation ), 0.02f );
+
+                m_CurrentGameTime = 3;
+            }
+        }
+
+        if ( m_PlayerSpawn.m_HasSpawned && !m_MatchStarted && !m_RoundStarted )
+        {
+            m_CurrentGameTime -= Time.fixedDeltaTime;
+        }
+
+        if ( m_BigTimeText == null )
+        {
+            m_BigTimeText = ( ( GameObject )GameObject.Instantiate( m_BigTimeTextPrefab, Vector3.zero, Quaternion.identity ) ).GetComponent<Text>( );
+            m_BigTimeText.transform.SetParent( GameObject.FindGameObjectWithTag( "Canvas" ).transform, false );
+        }
+
+        m_BigTimeText.text = m_CurrentGameTime.ToString( );
     }
 
     IEnumerator FadeInScreen( )
@@ -72,15 +152,18 @@ public sealed class GameManager : MonoBehaviour
         Image _fadeImg = m_FadeScreenObj.GetComponent<Image>( );
         _fadeImg.color = new Color( 0, 0, 0, 1 );
 
-        while ( _fadeImg.color.a > 0 )
+        while ( _fadeImg.color.a >= 0 )
         {
             Color _c = _fadeImg.color;
-            _c.a -= Time.fixedDeltaTime;
+            _c.a -= Time.fixedDeltaTime / 3;
 
             _fadeImg.color = _c;
 
+            ScreenAlpha = _c.a;
             yield return null;
         }
+
+        ScreenAlpha = _fadeImg.color.a;
         yield return null;
     }
 
@@ -88,16 +171,17 @@ public sealed class GameManager : MonoBehaviour
     {
         Image _fadeImg = m_FadeScreenObj.GetComponent<Image>( );
 
-        while ( _fadeImg.color.a < 1 )
+        while ( _fadeImg.color.a <= 1 )
         {
             Color _c = _fadeImg.color;
             _c.a += Time.fixedDeltaTime;
 
             _fadeImg.color = _c;
-
+            ScreenAlpha = _c.a;
             yield return null;
         }
 
+        ScreenAlpha = _fadeImg.color.a;
         yield return null;
     }
 

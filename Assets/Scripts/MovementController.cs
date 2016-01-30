@@ -74,7 +74,6 @@ public class MovementController : MonoBehaviour
         m_Dir = Vector3.RotateTowards( transform.forward, calcDir, step, 0.0f );
 
         DirDiff = Vector3.Dot( transform.TransformDirection( Vector3.forward ), ( transform.position + m_TargetDir ) - transform.position );
-        print( DirDiff );
 
         transform.rotation = Quaternion.LookRotation( m_Dir );
 

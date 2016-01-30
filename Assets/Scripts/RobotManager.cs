@@ -4,7 +4,7 @@ using System.Collections;
 public class RobotManager 
 {
     public Color m_RobotColor { get; private set; }
-    public float Health { get; private set; }
+    public float m_Health { get; private set; }
 
     public Color SetRobotColor( Color newColor )
     {

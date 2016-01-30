@@ -3,19 +3,25 @@ using System.Collections;
 
 public class SpawnPoint : MonoBehaviour
 {
-    //The object to be spawned
-    [HideInInspector] public GameObject Owner;
+    public bool m_HasSpawned = false;
+    public SpawnOwnerType m_Owner = SpawnOwnerType.NONE;
+    public enum SpawnOwnerType
+    {
+        PLAYER,
+        BOT,
+        NONE
+    }
 
     public void Spawn( )
     {
-        if ( Owner == null )
+        if ( m_Owner == null )
         {
-            Debug.LogError( "No Owner, cannot spawn" );
+            Debug.LogError( "No m_Owner, cannot spawn" );
             return;
         }
 
         //Create obj
-        GameObject.Instantiate( Owner, transform.position, Quaternion.identity );
+        //GameObject.Instantiate( Owner, transform.position, Quaternion.identity );
     }
 
     void OnDrawGizmos( )
