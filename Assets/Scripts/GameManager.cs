@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject m_RobotPrefab;				// Robot prefab for players to control
 	public bool m_Paused;							// Game state
 
-	public delegate void StartMatch();
-	public static event StartMatch;
+    //public delegate void StartMatch();
+    //public static event StartMatch;
 
 	public void StartMatch()
 	{

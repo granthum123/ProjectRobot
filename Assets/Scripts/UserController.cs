@@ -7,11 +7,11 @@ public class UserController : MonoBehaviour {
 	private string m_TurnAxisName;
 	private float m_MovementInputValue;         // The current value of the movement input.
 	private float m_TurnInputValue;
-	private Movement m_movement;
+	private MovementController m_movement;
 	
 	private void Start()
 	{
-		m_movement = GetComponent<Movement>();
+        m_movement = GetComponent<MovementController>( );
 		// The axes names are based on player number.
 		m_MovementAxisName = "Vertical";
 		m_TurnAxisName = "Horizontal";
@@ -28,12 +28,12 @@ public class UserController : MonoBehaviour {
 	private void FixedUpdate()
 	{
 		// Adjust the rigidbodies position and orientation in FixedUpdate.
-		m_movement.Move(m_MovementInputValue);
-		m_movement.Turn(m_TurnInputValue);
+        //m_movement.Move(m_MovementInputValue);
+        //m_movement.Turn(m_TurnInputValue);
 		
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
-			m_movement.Jump();
-		}
+        //if (Input.GetKeyDown (KeyCode.Space))
+        //{
+        //    m_movement.Jump();
+        //}
 	}
 }
