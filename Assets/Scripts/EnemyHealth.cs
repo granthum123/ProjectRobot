@@ -27,7 +27,7 @@ public class EnemyHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (IsSinking) {
-			transform.translate (-Vector3.up * SinkSpeed * Time.deltaTime);
+			transform.Translate (-Vector3.up * SinkSpeed * Time.deltaTime);
 		}
 	}
 
@@ -43,7 +43,7 @@ public class EnemyHealth : MonoBehaviour {
 		// Take damage
 		currentHealth -= amount;
 
-		onHitParticle.transform.positoin = HitPoint;
+		onHitParticle.transform.position = HitPoint;
 
 		onHitParticle.Play ();
 
