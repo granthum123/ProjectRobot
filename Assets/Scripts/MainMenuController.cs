@@ -7,4 +7,9 @@ public class MainMenuController : MonoBehaviour
     {
         Application.LoadLevel( "BattleScene" );
     }
+
+    public void ExitGame( )
+    {
+        Application.Quit( );
+    }
 }

@@ -481,6 +481,10 @@ Prefab:
       propertyPath: m_TagString
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 22486942, guid: 5c8225fb0752a4a44ac76169363d5853, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c8225fb0752a4a44ac76169363d5853, type: 2}
   m_IsPrefabParent: 0
@@ -1750,6 +1754,9 @@ MonoBehaviour:
   m_HealthBar: {fileID: 0}
   LeftWeapon: {fileID: 0}
   RightWeapon: {fileID: 0}
+  m_MaxHealth: 0
+  LeftWeaponPos: {x: 0, y: 0, z: 0}
+  RightWeaponPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &1833918229
 Prefab:
   m_ObjectHideFlags: 0

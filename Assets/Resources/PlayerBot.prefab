@@ -175,7 +175,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175780}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0.7071069, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 1.7560769, y: 0.848576, z: -6.2970843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HealthBar: {fileID: 187956, guid: c38fa0abe89fc4ebab46cda0f78703ca, type: 2}
-  LeftWeapon: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821, type: 2}
-  RightWeapon: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821, type: 2}
+  LeftWeapon: {fileID: 0}
+  RightWeapon: {fileID: 0}
   m_MaxHealth: 100
   LeftWeaponPos: {x: -0.7, y: 0, z: 0.5}
   RightWeaponPos: {x: 0.7, y: 0, z: 0.5}
