@@ -8,7 +8,7 @@ public class Robot : MonoBehaviour
 	public Weapon LeftWeapon;					// Prefab template for editor usage
 	public Weapon RightWeapon;
     public Color m_RobotColor { get; private set; }
-    public float m_MaxHealth { get; private set; }
+	public float m_MaxHealth;
 
 	public Vector3 LeftWeaponPos;
 	public Vector3 RightWeaponPos;
@@ -63,14 +63,18 @@ public class Robot : MonoBehaviour
 		}
 	}
 
-	void LeftWeaponFire()
+	public void LeftWeaponFire()
 	{
+		Debug.Log ("Left weapon fired");
+
 		if (LeftWeapon)
 			m_LeftWeapon.GetComponent<Weapon> ().Fire ();
 	}
 
-	void RightWeaponFire()
+	public void RightWeaponFire()
 	{
+		Debug.Log ("Right weapon fired");
+
 		if (RightWeapon)
 			m_RightWeapon.GetComponent<Weapon>().Fire();
 	}
