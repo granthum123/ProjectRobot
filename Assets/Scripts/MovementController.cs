@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class MovementController : MonoBehaviour
     /// <summary>
     /// Components
     /// </summary>
+	private Robot m_Robot;
     private Rigidbody m_RigidBodyComponent;
     private ParticleSystem m_SmokeParticleSys;
     private ParticleSystem.EmissionModule m_SmokeParticleEmit;
@@ -42,6 +43,7 @@ public class MovementController : MonoBehaviour
 	{
         //Set rigid body
         m_RigidBodyComponent = GetComponent<Rigidbody>( );
+		m_Robot = GetComponent<Robot> ();
         m_SmokeParticleSys = transform.FindChild( "RobotSmokeLeft" ).GetComponent<ParticleSystem>( );
         m_SmokeParticleEmit = m_SmokeParticleSys.emission;
 	}
@@ -49,6 +51,17 @@ public class MovementController : MonoBehaviour
     private float m_Speed = 0.0f;
     private Vector3 m_Dir = Vector3.zero, m_TargetDir = Vector3.zero;
     private float DirDiff = 0.0f;
+
+	void Update()
+	{
+		if (Input.GetButtonDown("Fire1")) {
+			m_Robot.LeftWeaponFire ();
+		}
+		if (Input.GetButtonDown ("Fire2")) {
+			m_Robot.RightWeaponFire ();
+		}
+
+	}
     void FixedUpdate( )
     {
         m_MoveDirection = Vector3.zero;
