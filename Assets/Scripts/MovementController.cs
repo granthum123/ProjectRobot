@@ -71,11 +71,10 @@ public class MovementController : MonoBehaviour
         //Rotate towards direction
         var _MouseScreenPos = new Vector2( Input.mousePosition.x, Input.mousePosition.y );
         var _mouseWorldPos = Camera.main.ScreenToWorldPoint( new Vector3( _MouseScreenPos.x, _MouseScreenPos.y, 9 ) );
+        _mouseWorldPos.y = transform.position.y;
 
-        float angle = ( Mathf.Atan2( _mouseWorldPos.y, _mouseWorldPos.x ) * Mathf.Rad2Deg ) - 90f;
-        transform.rotation = Quaternion.AngleAxis( angle, Vector3.up );
-
-        Debug.DrawLine( transform.position, _mouseWorldPos, Color.green );
+        Debug.DrawLine( transform.position, _mouseWorldPos );
+        transform.LookAt( _mouseWorldPos, Vector3.up );
 
         //Are we moving?
         if ( m_RigidBodyComponent.velocity != Vector3.zero && !m_SmokeParticleSys.isPlaying)
