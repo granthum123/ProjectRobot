@@ -15,6 +15,7 @@ GameObject:
   - 198: {fileID: 19884284}
   - 199: {fileID: 19997992}
   - 114: {fileID: 11424712}
+  - 114: {fileID: 11443460}
   m_Layer: 0
   m_Name: BasicEnemy1
   m_TagString: Untagged
@@ -32,7 +33,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: b0a5418951a844087a37ae0839a5f2ac, type: 2}
+  - {fileID: 2100000, guid: 585b9c4658644df4c930c18179aa8114, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -54,7 +55,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126984}
-  m_Mesh: {fileID: 4300008, guid: 0fc6b97057f1141baab073a74f971298, type: 3}
+  m_Mesh: {fileID: 4300008, guid: 944b6faf7345cf64c8c782f5ea9df40e, type: 3}
 --- !u!82 &8224456
 AudioSource:
   m_ObjectHideFlags: 1
@@ -177,6 +178,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11443460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e276f846b6bb7bc4d8333be3c333b925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HealthBar: {fileID: 187956, guid: c38fa0abe89fc4ebab46cda0f78703ca, type: 2}
+  LeftWeapon: {fileID: 167634, guid: eb7a5aa27d177b7469391a06e8b1b2fb, type: 2}
+  RightWeapon: {fileID: 178224, guid: 200a150d63ee949ab8f99d248dc7da85, type: 2}
 --- !u!136 &13625894
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1679,7 +1694,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37c1cc1738098471a9d86671c3bda466, type: 2}
+  - {fileID: 2100000, guid: a7052ad2a8006f146ac9d6c0af01e187, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -1717,14 +1732,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.4985957}
+  m_LocalPosition: {x: 0, y: 0, z: 5.2842703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.52326155, y: 0.12466321}
+  m_AnchoredPosition: {x: -8.132832, y: 1.254}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
