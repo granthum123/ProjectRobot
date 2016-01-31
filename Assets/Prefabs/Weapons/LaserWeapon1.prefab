@@ -28,7 +28,7 @@ GameObject:
   - 33: {fileID: 3369974}
   - 23: {fileID: 2321434}
   m_Layer: 0
-  m_Name: LaserWeapon
+  m_Name: LaserWeapon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
