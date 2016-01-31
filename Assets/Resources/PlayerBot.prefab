@@ -97,6 +97,7 @@ GameObject:
   - 114: {fileID: 11405994}
   - 54: {fileID: 5401760}
   - 136: {fileID: 13605738}
+  - 114: {fileID: 11420128}
   m_Layer: 0
   m_Name: PlayerBot
   m_TagString: Player
@@ -174,7 +175,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175780}
-  m_LocalRotation: {x: 0, y: 0.7071069, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 1.7560769, y: 0.848576, z: -6.2970843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -366,6 +367,23 @@ MonoBehaviour:
   m_JumpHeight: 5
   m_JetpackFuelVal: 10
   m_Fuel: 0
+--- !u!114 &11420128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e276f846b6bb7bc4d8333be3c333b925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HealthBar: {fileID: 187956, guid: c38fa0abe89fc4ebab46cda0f78703ca, type: 2}
+  LeftWeapon: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821, type: 2}
+  RightWeapon: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821, type: 2}
+  m_MaxHealth: 100
+  LeftWeaponPos: {x: -0.7, y: 0, z: 0.5}
+  RightWeaponPos: {x: 0.7, y: 0, z: 0.5}
 --- !u!136 &13605738
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1915,7 +1933,45 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: LeftWeapon
+      value: 
+      objectReference: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: RightWeapon
+      value: 
+      objectReference: {fileID: 11481962, guid: ae7bef90e9f5348c893d615ba6c2b821,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_HealthBar
+      value: 
+      objectReference: {fileID: 187956, guid: c38fa0abe89fc4ebab46cda0f78703ca, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: LeftWeaponPos.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: RightWeaponPos.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: LeftWeaponPos.x
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: LeftWeaponPos.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: RightWeaponPos.x
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 175780}
