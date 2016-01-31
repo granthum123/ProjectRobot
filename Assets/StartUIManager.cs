@@ -7,7 +7,7 @@ public class StartUIManager : MonoBehaviour {
     private Canvas m_canvas;
     public Text m_Weapon1Text;
     public Text m_Weapon2Text;
-    private string[] m_WeaponNames = new string[] { "Lazer Pistol", "Minigun", "Rocket Launcher", "Shotgun" };
+    private string[] m_WeaponNames = new string[] { "Lazer Pistol", "Minigun", "Rocket Launcher", "Shotgun", "Assault Rifle" };
     private int m_Weapon1num = 0;
     private int m_Weapon2num = 0;
     // Use this for initialization
