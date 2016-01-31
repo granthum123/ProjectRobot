@@ -40,6 +40,9 @@ public class EntryController : MonoBehaviour
         Color _newColor = m_txt_Message.color;
         float _txtAlpha = m_txt_Message.color.a;
 
+        //Toggle distorter
+        m_Distorter.ToggleDistort( );
+
         //Fade out current text
         while ( _txtAlpha > 0 )
         {
@@ -55,8 +58,11 @@ public class EntryController : MonoBehaviour
             yield return null;
         }
 
+        //Toggle distorter
+        m_Distorter.ToggleDistort( );
+
         //Wait for a bit before fading back in
-        yield return new WaitForSeconds( 0.5f ); //3 seconds might be too long....
+        yield return new WaitForSeconds( 1.5f ); //3 seconds might be too long....
         m_TextOnScreen = m_MessagesToDisplay[ idx ];
 
         //Fade in new text
@@ -74,15 +80,32 @@ public class EntryController : MonoBehaviour
             yield return null;
         }
 
-        //Wait for a bit before fading back in
+        //Wait for a bit before fading back out
         yield return new WaitForSeconds( 4 ); //3 seconds might be too long....
-
-        //Toggle distorter
 
         //Show next
         if ( idx + 1 < m_MessagesToDisplay.Length )
         {
             yield return StartCoroutine( SwitchText( idx + 1 ) );
+        }
+        else
+        {
+            //Fade out current text
+            while ( _txtAlpha > 0 )
+            {
+                //Decremnent alpha
+                _txtAlpha -= Time.fixedDeltaTime / 5.0f;
+
+                //Assign new alpha to color
+                _newColor = new Color( _newColor.r, _newColor.g, _newColor.b, _txtAlpha );
+
+                //Apply color to txt component
+                m_txt_Message.color = _newColor;
+
+                yield return null;
+            }
+
+            Application.LoadLevel( "MainMenuScene" );
         }
 
         yield return null;
