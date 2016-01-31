@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent (typeof(LineRenderer))]
 
-public class LaserBeam : MonoBehaviour {
+public class LaserWeapon : MonoBehaviour {
 
 	public float laserWidth = 1.0f;
 	public float noise = 1.0f;
